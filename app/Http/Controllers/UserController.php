@@ -9,6 +9,11 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+    public function logout()
+    {
+        auth()->logout();
+        return redirect('/')->with('success', 'You are now logged out');
+    }
     public function showCorrectHomepage()
     {
         if (auth()->check()) {
@@ -28,9 +33,9 @@ class UserController extends Controller
         //! attempt kiểm tra xem người dùng có trong cơ sở dữ liệu hay k -> true || false
         if (auth()->attempt(['username' => $incomingFields['loginusername'], 'password' => $incomingFields['loginpassword']])) {
             $request->session()->regenerate();
-            return 'Congratulations!!!';
+            return redirect('/')->with('success', 'You have successfully logged in');
         } else {
-            return 'Sorry!!!';
+            return redirect('/')->with('failure', 'Invalid login');
         }
     }
     public function register(Request $request) //! $request chứa tất cả dữ liệu người dùng gửi đến
@@ -41,7 +46,8 @@ class UserController extends Controller
             'email' => ['required', 'email', Rule::unique('users', 'email')],
             'password' => ['required', 'min:8', 'confirmed'],
         ]);
-        User::create($incomingFields); //! Lưu thông tin người dùng vào cơ sở dữ liệu
-        return 'Hello from register function';
+        $user = User::create($incomingFields); //! Lưu thông tin người dùng vào cơ sở dữ liệu
+        auth()->login($user);
+        return redirect('/')->with('success', 'Thank you for creating an account');
     }
 }
