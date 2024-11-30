@@ -172,3 +172,13 @@ php artisan make:migration create_posts_table
 php artisan migrate
 php artisan migrate:rollback
 ```
+
+## Middleware
+
+Migrations giúp quản lý và thay đổi cấu trúc của cơ sở dữ liệu (database) một cách dễ dàng.
+
+Mỗi khi cần thay đổi cấu trúc cơ sở dữ liệu, thay vì chỉnh sửa thủ công, bạn chỉ cần tạo một file migration để thực hiện các thay đổi này.
+
+```php
+php artisan make:middleware MustBeLoggedIn
+```
