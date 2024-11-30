@@ -116,12 +116,19 @@ Gõ "doc" tạo cho ta cấu trúc html.
 ## Migrations trong Laravel
 
 Migrations giúp quản lý và thay đổi cấu trúc của cơ sở dữ liệu (database) một cách dễ dàng.
+
 Mỗi lần cần thay đổi cơ sở dữ liệu, thay vì chỉnh sửa thủ công, chỉ cần tạo một file migration để thực hiện các thay đổi này.
+
 public function up(): là nơi định nghĩa các thay đổi muốn thực hiện đối với cơ sở dữ liệu. Đây là nơi tạo bảng, thêm cột, chỉnh sửa dữ liệu.
+
 $table->id(); -> Tạo cột khóa chính (primary key) tự động tăng dần.
+
 $table->timestamps(); -> Tạo hai cột created_at và updated_at để lưu trữ thời gian khi bản ghi được tạo và cập nhật.
+
 $table->string('title'); -> Tạo cột title có kiểu dữ liệu là chuỗi (string), dùng để lưu tiêu đề bài viết.
+
 $table->longText('body'); -> ... lưu nội dung chi tiết của bài viết (vì nội dung có thể dài, nên cần kiểu dữ liệu này).
+
 $table->foreignId('user_id')->constrained()->onDelete('cascade'); -> lưu id, nhận ra khóa ngoại, nếu user xóa bài viết cũng xóa theo.
 
 ```sh
