@@ -27,9 +27,9 @@ class PostController extends Controller
         $incomingFields['user_id'] = auth()->id();
 
         //! Tạo một bảng ghi mới trong cơ sở dữ liệu posts
-        Post::create($incomingFields);
+        $newPost = Post::create($incomingFields);
 
-        return "helo";
+        return redirect("/post/{$newPost->id}")->with('success', 'New post successfully created.');
     }
     public function showCreateForm()
     {
