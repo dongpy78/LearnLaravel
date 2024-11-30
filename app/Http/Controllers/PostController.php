@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public function viewSinglePost(Post $post)
+    {
+        //! Chuyển dữ liệu bài đăng trên blog vào view
+        return view('single-post', ['post' => $post]);
+    }
     public function storeNewPost(Request $request)
     {
         //! Xác thực dữ liệu người dùng gửi lên đảm bảo title và body không bị bỏ trống
