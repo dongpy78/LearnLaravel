@@ -175,9 +175,7 @@ php artisan migrate:rollback
 
 ## Middleware
 
-Migrations giúp quản lý và thay đổi cấu trúc của cơ sở dữ liệu (database) một cách dễ dàng.
-
-Mỗi khi cần thay đổi cấu trúc cơ sở dữ liệu, thay vì chỉnh sửa thủ công, bạn chỉ cần tạo một file migration để thực hiện các thay đổi này.
+Middleware kiểm tra và xử lý yêu cầu HTTP đến trước khi nó được gửi tới các controller hoặc sau khi controller xử lý xong.
 
 ```php
 php artisan make:middleware MustBeLoggedIn
