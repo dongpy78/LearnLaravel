@@ -2,28 +2,28 @@
 
 <p align="center">
 <a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.phpields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.phpields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.phpields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
 ## Các Lệnh Laravel
 
 -   Install composer
 
-```sh
+```php
 https://getcomposer.org/
 ```
 
 -   Tạo project laravel
 
-```sh
+```php
 composer create-project laravel/laravel ourfirstapp
 ```
 
 -   Run code laravel / http://127.0.0.1:8000/ nên sử dụng địa chỉ này ở local
 
-```sh
+```php
 php artisan serve
 ```
 
@@ -31,7 +31,7 @@ php artisan serve
 
 -   Thư mực routes của dự án / có 4 file nhưng file web.php chứa tất cả đường dẫn của dự án
 
-```sh
+```php
 <?php
 use Illuminate\Support\Facades\Route;
 
@@ -49,8 +49,8 @@ Route::get('/about', function () {
 
 -   Lệnh làm mới lại cơ sở dữ liệu
 
-```sh
-php artisan migrate:fresh
+```php
+php artisan migrate:frephp
 ```
 
 ## Controller
@@ -60,13 +60,13 @@ Controller giống như người quản lý dự án, controller sẽ thực hi�
 
 -   Tạo file ExampleController bằng dòng lệnh
 
-```sh
+```php
 php artisan make:controller ExampleController
 ```
 
 -   Cập nhật lại file routes
 
-```sh
+```php
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
@@ -77,7 +77,7 @@ Route::get('/about', [ExampleController::class, "aboutPage"]);
 
 -   File ExampleController
 
-```sh
+```php
 <?php
 namespace App\Http\Controllers;
 
@@ -97,7 +97,7 @@ class ExampleController extends Controller {
 
 Tạo một file model mới bằng dòng lệnh.
 
-```sh
+```php
 php artisan make:model Post
 ```
 
@@ -109,7 +109,23 @@ Trong views: ví dụ tạo file homepage.blade.php.
 
 Gõ "doc" tạo cho ta cấu trúc html.
 
-```sh
+```php
+
+```
+
+## Markdown cho mô tả
+
+Link github tham khảo: https://github.com/adam-p/markdown-here/wiki/markdown-cheatphpeet
+
+```php
+    public function viewSinglePost(Post $post) {
+        $post['body'] = strip_tags(Str::markdown($post->body), '<p><ul><ol><li><strong><em><h3><br>');
+        return view('single-post', ['post' => $post]);
+    }
+
+    <div class="body-content">
+       {!! $post -> body !!}
+    </div>
 
 ```
 
@@ -117,21 +133,42 @@ Gõ "doc" tạo cho ta cấu trúc html.
 
 Migrations giúp quản lý và thay đổi cấu trúc của cơ sở dữ liệu (database) một cách dễ dàng.
 
-Mỗi lần cần thay đổi cơ sở dữ liệu, thay vì chỉnh sửa thủ công, chỉ cần tạo một file migration để thực hiện các thay đổi này.
+Mỗi khi cần thay đổi cấu trúc cơ sở dữ liệu, thay vì chỉnh sửa thủ công, bạn chỉ cần tạo một file migration để thực hiện các thay đổi này.
 
-public function up(): là nơi định nghĩa các thay đổi muốn thực hiện đối với cơ sở dữ liệu. Đây là nơi tạo bảng, thêm cột, chỉnh sửa dữ liệu.
+### Các phương thức chính trong Migration
 
-$table->id(); -> Tạo cột khóa chính (primary key) tự động tăng dần.
+-   **public function up()**: Đây là nơi định nghĩa các thay đổi cần thực hiện đối với cơ sở dữ liệu. Trong phương thức `up`, bạn có thể tạo bảng, thêm cột, chỉnh sửa dữ liệu...
 
-$table->timestamps(); -> Tạo hai cột created_at và updated_at để lưu trữ thời gian khi bản ghi được tạo và cập nhật.
+    Ví dụ:
 
-$table->string('title'); -> Tạo cột title có kiểu dữ liệu là chuỗi (string), dùng để lưu tiêu đề bài viết.
+    ```php
+    public function up()
+    {
+        Schema::create('posts', function (Blueprint $table) {
+            $table->id(); // Tạo cột khóa chính (primary key) tự động tăng dần.
+            $table->timestamps(); // Tạo hai cột `created_at` và `updated_at` để lưu trữ thời gian tạo và cập nhật bản ghi.
+            $table->string('title'); // Tạo cột `title` có kiểu dữ liệu chuỗi (string), dùng để lưu tiêu đề bài viết.
+            $table->longText('body'); // Tạo cột `body` lưu trữ nội dung chi tiết của bài viết (kiểu dữ liệu `longText` vì nội dung có thể dài).
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Tạo cột `user_id` làm khóa ngoại, khi người dùng xóa bài viết, bài viết cũng bị xóa theo.
+        });
+    }
+    ```
 
-$table->longText('body'); -> ... lưu nội dung chi tiết của bài viết (vì nội dung có thể dài, nên cần kiểu dữ liệu này).
+-   **public function down()**: Phương thức này được sử dụng để quay lại (rollback) những thay đổi trong phương thức `up`. Ví dụ, nếu bạn tạo bảng trong `up()`, thì trong `down()` bạn sẽ xóa bảng đó.
 
-$table->foreignId('user_id')->constrained()->onDelete('cascade'); -> lưu id, nhận ra khóa ngoại, nếu user xóa bài viết cũng xóa theo.
+    ```php
+    public function down()
+    {
+        Schema::dropIfExists('posts');
+    }
+    ```
 
-```sh
+### Lệnh tạo Migration và chạy Migration
+
+Để tạo một migration, bạn có thể sử dụng lệnh sau:
+
+```php
 php artisan make:migration create_posts_table
 php artisan migrate
+php artisan migrate:rollback
 ```
