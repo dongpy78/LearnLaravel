@@ -24,5 +24,9 @@ class AppServiceProvider extends ServiceProvider
     {
         //! Kiểm tra quyền cho model Post 
         Gate::policy(Post::class, PostPolicy::class);
+
+        Gate::define('visitAdminPages', function ($user) {
+            return $user->isAdmin === 1;
+        });
     }
 }

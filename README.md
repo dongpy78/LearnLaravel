@@ -191,12 +191,12 @@ PostPolicy là nơi viết các phương thức để kiểm tra quyền (như d
 php artisan make:policy PostPolicy --model=Post
 ```
 
-## Policy
+## Permissions Administration
 
-Gate::policy(Post::class, PostPolicy::class) chỉ đơn giản là khai báo rằng khi Laravel cần kiểm tra quyền trên mô hình Post, nó sẽ dùng PostPolicy.
-
-PostPolicy là nơi viết các phương thức để kiểm tra quyền (như delete, update) của người dùng đối với bài viết.
+Lệnh này giúp tạo một migration mới để thêm cột isadmin vào bảng users.
 
 ```php
 php artisan make:migration add_isadmin_to_users_table -- table=users
+php artisan migrate
+
 ```
