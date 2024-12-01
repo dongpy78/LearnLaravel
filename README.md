@@ -180,3 +180,13 @@ Middleware kiểm tra và xử lý yêu cầu HTTP đến trước khi nó đư�
 ```php
 php artisan make:middleware MustBeLoggedIn
 ```
+
+## Policy
+
+Gate::policy(Post::class, PostPolicy::class) chỉ đơn giản là khai báo rằng khi Laravel cần kiểm tra quyền trên mô hình Post, nó sẽ dùng PostPolicy.
+
+PostPolicy là nơi viết các phương thức để kiểm tra quyền (như delete, update) của người dùng đối với bài viết.
+
+```php
+php artisan make:policy PostPolicy --model=Post
+```

@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Models\Post;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public function delete(Post $post)
+    {
+        //! tìm trong PostPolicy phương thức delete() -> true: xóa
+        Gate::authorize('delete', $post);
+        $post->delete();
+        return redirect("/profile/" . auth()->user()->username)->with('success', 'Post deleted successfully');
+    }
     public function viewSinglePost(Post $post)
     {
         $post['body'] = strip_tags(Str::markdown($post->body), '<p><ul><ol><li><strong><em><h3><br>');
