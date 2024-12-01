@@ -198,5 +198,12 @@ Lệnh này giúp tạo một migration mới để thêm cột isadmin vào b�
 ```php
 php artisan make:migration add_isadmin_to_users_table -- table=users
 php artisan migrate
+```
 
+## php artisan storage:link
+
+Tạo một symbolic link (liên kết tượng trưng) từ thư mục storage/app/public vào thư mục public/storage trong dự án của bạn.
+
+```php
+php artisan storage:link
 ```
