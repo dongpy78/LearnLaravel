@@ -37,7 +37,9 @@ class PostPolicy
      */
     public function update(User $user, Post $post): bool
     {
-        //
+        if ($user->isAdmin === 1) {
+            return true;
+        }
         return $user->id === $post->user_id;
     }
 
@@ -46,6 +48,9 @@ class PostPolicy
      */
     public function delete(User $user, Post $post): bool
     {
+        if ($user->isAdmin === 1) {
+            return true;
+        }
         //! Kiểm tra xem người dùng hiện tại có phải là tác giả của bài viết này hay k
         return $user->id === $post->user_id;
     }
