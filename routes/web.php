@@ -15,7 +15,7 @@ Route::get('/', [UserController::class, "showCorrectHomepage"])->name('login');
 Route::post('/register', [UserController::class, "register"])->middleware('guest');
 Route::post('/login', [UserController::class, "login"])->middleware('guest');
 Route::post('/logout', [UserController::class, "logout"])->middleware(MustBeLoggedIn::class);
-Route::get('/manage-avatar', [UserController::class, 'showAvatarForm']);
+Route::get('/manage-avatar', [UserController::class, 'showAvatarForm'])->middleware(MustBeLoggedIn::class);
 Route::post('/manage-avatar', [UserController::class, 'storeAvatar']);
 
 // Blog post related routes

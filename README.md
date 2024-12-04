@@ -207,3 +207,13 @@ Tạo một symbolic link (liên kết tượng trưng) từ thư mục storage/
 ```php
 php artisan storage:link
 ```
+
+## Cài đặt thư viện Intervention Image
+
+Cài đặt thư viện Intervention Image giúp dễ dàng thao tác và xử lý hình ảnh trong các ứng dụng web.
+
+Khi lệnh hoàn tất, thư viện sẽ được thêm vào trong tệp composer.json của dự án và có thể sử dụng các phương thức của thư viện để làm việc với hình ảnh.
+
+```php
+composer require intervention/image
+```
