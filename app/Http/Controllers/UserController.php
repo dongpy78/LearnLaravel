@@ -25,7 +25,18 @@ class UserController extends Controller
         $manager = new ImageManager(new Driver());
         $image = $manager->read($request->file("avatar"));
         $imgData = $image->cover(120, 120)->toJpeg();
-        Storage::disk('public')->put('avatars/' . $filename, $imgData);
+        Storage::put("public/avatars/" . $filename, $imgData);
+
+        $oldAvatar = $user->avatar;
+
+        $user->avatar = $filename;
+        $user->save();
+
+        if ($oldAvatar != "/fallback-avatar.jpg") {
+            Storage::delete(str_replace("/storage/", "public/", $oldAvatar));
+        }
+
+        return back()->with('success', 'Congrats on the new avatar.');
     }
     public function showAvatarForm()
     {
@@ -34,7 +45,12 @@ class UserController extends Controller
     public function profile(User $user)
     {
         // return view('profile-posts', ['username' => $user->username]);
-        return view('profile-posts', ['username' => $user->username, 'posts' => $user->posts()->latest()->get(), 'postCount' => $user->posts()->count()]);
+        return view('profile-posts', [
+            'avatar' => $user->avatar,
+            'username' => $user->username,
+            'posts' => $user->posts()->latest()->get(),
+            'postCount' => $user->posts()->count()
+        ]);
     }
     public function logout()
     {
