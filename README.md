@@ -217,3 +217,15 @@ Khi lệnh hoàn tất, thư viện sẽ được thêm vào trong tệp compose
 ```php
 composer require intervention/image
 ```
+
+## Tạo bảng dữ liệu follows mới
+
+Cài đặt thư viện Intervention Image giúp dễ dàng thao tác và xử lý hình ảnh trong các ứng dụng web.
+
+Khi lệnh hoàn tất, thư viện sẽ được thêm vào trong tệp composer.json của dự án và có thể sử dụng các phương thức của thư viện để làm việc với hình ảnh.
+
+```php
+php artisan make:migration create_follows_table
+php artisan migrate
+php artisan make:model Follow
+```
